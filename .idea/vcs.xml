@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Demo" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/FaceIDApp" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/ML/ML_Assignment2_IT19089300_IT19004914_IT19067902_IT19020990" vcs="Git" />
