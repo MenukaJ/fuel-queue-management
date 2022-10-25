@@ -21,8 +21,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginBottom="10dp"
-            app:tint="#000000"
-            tools:srcCompat="@drawable/logo" />
+            android:src="@drawable/oils" />
 
         <TextView
             android:layout_width="match_parent"
@@ -68,7 +67,7 @@
             android:fontFamily="sans-serif-black"
             android:padding="10dp"
             android:text="Login"
-            android:textColor="#1B1515"
+            android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -102,6 +101,7 @@
             android:clickable="true"
             android:text="Create an Account"
             android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 </RelativeLayout>

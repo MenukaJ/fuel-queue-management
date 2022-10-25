@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/drawable/btn_view.xml" value="0.1185" />
+        <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/drawable/main_logo.xml" value="0.18" />
+        <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
         <entry key="..\:/SLIIT/EAD/fuel-queue-management/app/src/main/res/drawable/background_main.xml" value="0.127" />
         <entry key="..\:/SLIIT/EAD/fuel-queue-management/app/src/main/res/drawable/btn_view.xml" value="0.1465" />
         <entry key="..\:/SLIIT/EAD/fuel-queue-management/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.127" />
