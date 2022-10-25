@@ -16,23 +16,27 @@
         >
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:id="@+id/vehicleType"
-            android:gravity="center"
-            android:editable="false"
-            android:background="@drawable/edit_text_box"
-            android:padding="10dp"/>
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:id="@+id/vehicleNumber"
-            android:gravity="center"
-            android:editable="false"
             android:background="@drawable/edit_text_box"
-            android:padding="10dp"/>
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/vehicleNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_box"
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/count"
@@ -47,74 +51,87 @@
             android:textStyle="bold" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:id="@+id/fuelStation"
-            android:gravity="center"
-            android:editable="false"
-            android:background="@drawable/edit_text_box"
-            android:padding="10dp"/>
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_box"
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold|italic" />
+
+        <EditText
             android:id="@+id/fuelArriveTime"
-            android:gravity="center"
-            android:editable="false"
-            android:background="@drawable/edit_text_box"
-            android:padding="10dp"/>
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:id="@+id/fuelFinishTime"
-            android:gravity="center"
-            android:editable="false"
             android:background="@drawable/edit_text_box"
-            android:padding="10dp"/>
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/fuelFinishTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_box"
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/join"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Join" />
+            android:text="Join"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/exist"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Exist" />
+            android:text="Exist"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/complete"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Finish" />
+            android:text="Finish"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:id="@+id/joinTime"
-            android:gravity="center"
-            android:editable="false"
-            android:background="@drawable/edit_text_box"
-            android:padding="10dp"/>
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:id="@+id/existTime"
-            android:gravity="center"
-            android:editable="false"
             android:background="@drawable/edit_text_box"
-            android:padding="10dp"/>
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/existTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_box"
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="16sp" />
 
         <EditText
             android:layout_width="match_parent"
