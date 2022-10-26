@@ -5,7 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+/**
+ * The type Db helper.
+ */
 public class DBHelper extends SQLiteOpenHelper {
+    /**
+     * Instantiates a new Db helper.
+     *
+     * @param context the context
+     */
     public DBHelper(Context context ) {
         super(context,"UserData",null, 1);
     }
@@ -17,6 +26,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
         DB.execSQL("drop Table if exists UserDetails");
     }
+
+    /**
+     * Inset user data boolean.
+     *
+     * @param name     the name
+     * @param number   the number
+     * @param email    the email
+     * @param password the password
+     * @return the boolean
+     */
     public Boolean insetUserData(String name,String number,String email,String password){
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -31,6 +50,12 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    /**
+     * Get data cursor.
+     *
+     * @return the cursor
+     */
     public Cursor getData(){
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor cursor = DB.rawQuery("Select * from Userdetails ",null);

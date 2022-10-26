@@ -11,10 +11,25 @@ import android.widget.Button;
 
 import com.sliit.fuel_queue_management.Sql.DBHelper;
 
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends AppCompatActivity {
 
-    Button login, Reg;
+    /**
+     * The Login.
+     */
+    Button login, /**
+     * The Reg.
+     */
+    Reg;
+    /**
+     * The Toolbar.
+     */
     Toolbar toolbar;
+    /**
+     * The Db helper.
+     */
     DBHelper dbHelper;
 
     @Override

@@ -14,11 +14,32 @@ import android.widget.Toast;
 
 import com.sliit.fuel_queue_management.Sql.DBHelper;
 
+/**
+ * The type Login.
+ */
 public class Login extends AppCompatActivity {
 
-    EditText email, password, role;
+    /**
+     * The Email.
+     */
+    EditText email, /**
+     * The Password.
+     */
+    password, /**
+     * The Role.
+     */
+    role;
+    /**
+     * The Btn submit.
+     */
     Button btnSubmit;
+    /**
+     * The Create acc.
+     */
     TextView createAcc;
+    /**
+     * The Db helper.
+     */
     DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +97,15 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Login check boolean.
+     *
+     * @param cursor     the cursor
+     * @param emailCheck the email check
+     * @param passCheck  the pass check
+     * @return the boolean
+     */
     public static boolean loginCheck(Cursor cursor,String emailCheck,String passCheck) {
         while (cursor.moveToNext()){
             if (cursor.getString(0).equals(emailCheck)) {

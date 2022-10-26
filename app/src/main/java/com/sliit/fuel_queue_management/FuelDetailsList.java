@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+/**
+ * The type Fuel details list.
+ */
 public class FuelDetailsList extends AppCompatActivity {
 
     @Override

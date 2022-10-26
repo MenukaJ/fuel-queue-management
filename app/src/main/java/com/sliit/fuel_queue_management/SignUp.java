@@ -11,10 +11,31 @@ import android.widget.Toast;
 
 import com.sliit.fuel_queue_management.Sql.DBHelper;
 
+/**
+ * The type Sign up.
+ */
 public class SignUp extends AppCompatActivity {
 
-    EditText name , number , email,pass;
+    /**
+     * The Name.
+     */
+    EditText name , /**
+     * The Number.
+     */
+    number , /**
+     * The Email.
+     */
+    email, /**
+     * The Pass.
+     */
+    pass;
+    /**
+     * The Login.
+     */
     TextView login;
+    /**
+     * The Db helper.
+     */
     DBHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

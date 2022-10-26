@@ -43,25 +43,76 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The type Final page.
+ */
 public class FinalPage extends AppCompatActivity {
 
+    /**
+     * The My url.
+     */
     String myUrl = "https://fuel-queue-management.herokuapp.com/email/";
+    /**
+     * The Queue count.
+     */
     TextView queueCount;
+    /**
+     * The Vehicle type.
+     */
     TextView vehicleType;
+    /**
+     * The Vehicle number.
+     */
     TextView vehicleNumber;
+    /**
+     * The Fuel station.
+     */
     TextView fuelStation;
+    /**
+     * The Fuel arrive time.
+     */
     TextView fuelArriveTime;
+    /**
+     * The Fuel finish time.
+     */
     TextView fuelFinishTime;
+    /**
+     * The Join time.
+     */
     TextView joinTime;
+    /**
+     * The Exist time.
+     */
     TextView existTime;
+    /**
+     * The Join.
+     */
     Button join;
+    /**
+     * The Exist.
+     */
     Button exist;
+    /**
+     * The Complete.
+     */
     Button complete;
 
+    /**
+     * The Progress dialog.
+     */
     ProgressDialog progressDialog;
 
+    /**
+     * The Text.
+     */
     TextView text;
+    /**
+     * The Drawer layout.
+     */
     public DrawerLayout drawerLayout;
+    /**
+     * The Action bar drawer toggle.
+     */
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -85,7 +136,7 @@ public class FinalPage extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        MyAsyncTasks myAsyncTasks = new MyAsyncTasks();
+        FuelQue myAsyncTasks = new FuelQue();
         myAsyncTasks.execute();
 
         // to make the Navigation drawer icon always appear on the action bar
@@ -147,7 +198,10 @@ public class FinalPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class MyAsyncTasks extends AsyncTask<String, String, String> {
+    /**
+     * The type My async tasks.
+     */
+    public class FuelQue extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -203,7 +257,6 @@ public class FinalPage extends AppCompatActivity {
                 return "Exception: " + e.getMessage();
             }
             return result;
-
         }
 
         @Override
@@ -217,6 +270,7 @@ public class FinalPage extends AppCompatActivity {
                 JSONObject userObj = jsonObject.optJSONObject("user");
                 JSONObject fuelStat = jsonObject.optJSONObject("fuelStation");
 
+                //JSONObject fuelDetails = new JSONObject(responce);
 
                 //JSONObject jsonObject1 =jsonArray1.getJSONObject(0);
                 String count = jsonObject.getString("count");
@@ -232,7 +286,6 @@ public class FinalPage extends AppCompatActivity {
                 existTime.setText("Departure Time: "+jsonObject.getString("departureTime"));
                 fuelArriveTime.setText("Fuel Arrival Time: "+jsonObject.getString("arrivalTime"));
                 fuelFinishTime.setText("Fuel Departure Time: "+jsonObject.getString("departureTime"));
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
