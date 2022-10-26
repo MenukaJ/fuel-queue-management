@@ -16,41 +16,6 @@
         >
 
         <TextView
-            android:id="@+id/vehicleType"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edit_text_box"
-            android:editable="false"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/vehicleNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edit_text_box"
-            android:editable="false"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edit_text_box"
-            android:editable="false"
-            android:gravity="center"
-            android:padding="10dp"
-            android:textSize="48sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/fuelStation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,8 +24,44 @@
             android:editable="false"
             android:gravity="center"
             android:padding="10dp"
+            android:textSize="48sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_box"
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
             android:textSize="20sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_box"
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text_box"
+            android:editable="false"
+            android:gravity="center"
+            android:padding="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/fuelArriveTime"
@@ -71,7 +72,9 @@
             android:editable="false"
             android:gravity="center"
             android:padding="10dp"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/fuelFinishTime"
@@ -82,7 +85,9 @@
             android:editable="false"
             android:gravity="center"
             android:padding="10dp"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
