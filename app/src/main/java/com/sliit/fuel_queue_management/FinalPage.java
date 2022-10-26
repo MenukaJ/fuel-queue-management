@@ -10,6 +10,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -19,15 +20,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FinalPage extends AppCompatActivity {
 
@@ -98,6 +112,30 @@ public class FinalPage extends AppCompatActivity {
         join = findViewById(R.id.join);
         exist = findViewById(R.id.exist);
         complete = findViewById(R.id.complete);
+
+        join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpdateJoinTime updateJoinTime = new UpdateJoinTime();
+                updateJoinTime.execute();
+            }
+        });
+
+        exist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpdateExistTime updateExistTime = new UpdateExistTime();
+                updateExistTime.execute();
+            }
+        });
+
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpdateCompleteTime updateCompleteTime = new UpdateCompleteTime();
+                updateCompleteTime.execute();
+            }
+        });
     }
 
     @Override
@@ -176,8 +214,6 @@ public class FinalPage extends AppCompatActivity {
                // JSONArray jsonArray1 = jsonObject.getJSONArray(jsonObject);
                 //JSONArray jsonArray1 = new JSONArray(s);
 
-                System.out.println("ssssssssssssss"+ jsonObject.getString("count"));
-
                 JSONObject userObj = jsonObject.optJSONObject("user");
                 JSONObject fuelStat = jsonObject.optJSONObject("fuelStation");
 
@@ -202,6 +238,339 @@ public class FinalPage extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
 
+    private class UpdateJoinTime extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(FinalPage.this);
+            progressDialog.setMessage("processing results");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String result = "";
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    Intent intent = getIntent();
+                    String s2 = intent.getStringExtra("email");
+                    final String encodedURL = URLEncoder.encode(s2, "UTF-8");
+                    url = new URL(myUrl+encodedURL);
+                    //open a URL coonnection
+
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+
+                    InputStreamReader isw = new InputStreamReader(in);
+
+                    int data = isw.read();
+
+                    while (data != -1) {
+                        result += (char) data;
+                        data = isw.read();
+                    }
+
+                    // return the data to onPostExecute method
+                    return result;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return result;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+                String date = format.format(new Date());
+
+                jsonObject.put("arrivalTime", date);
+                jsonObject.put("status", "JOINED");
+
+                final String urlAddress = "https://fuel-queue-management.herokuapp.com/api/FuelQueue/"+jsonObject.getString("id");
+                URL url = new URL(urlAddress);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("PUT");
+                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                conn.setRequestProperty("Accept","application/json");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                Log.i("JSON", jsonObject.toString());
+                DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+
+                //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                os.writeBytes(jsonObject.toString());
+
+                os.flush();
+                os.close();
+
+                Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                Log.i("MSG" , conn.getResponseMessage());
+
+                conn.disconnect();
+
+            } catch (JSONException | MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+                }
+            });
+
+            thread.start();
+        }
+    }
+
+
+    private class UpdateExistTime extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(FinalPage.this);
+            progressDialog.setMessage("processing results");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String result = "";
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    Intent intent = getIntent();
+                    String s2 = intent.getStringExtra("email");
+                    final String encodedURL = URLEncoder.encode(s2, "UTF-8");
+                    url = new URL(myUrl+encodedURL);
+                    //open a URL coonnection
+
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+
+                    InputStreamReader isw = new InputStreamReader(in);
+
+                    int data = isw.read();
+
+                    while (data != -1) {
+                        result += (char) data;
+                        data = isw.read();
+                    }
+
+                    // return the data to onPostExecute method
+                    return result;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return result;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+                        String date = format.format(new Date());
+
+                        jsonObject.put("departureTime", date);
+                        jsonObject.put("status", "EXIST");
+
+                        final String urlAddress = "https://fuel-queue-management.herokuapp.com/api/FuelQueue/"+jsonObject.getString("id");
+                        URL url = new URL(urlAddress);
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestMethod("PUT");
+                        conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                        conn.setRequestProperty("Accept","application/json");
+                        conn.setDoOutput(true);
+                        conn.setDoInput(true);
+
+                        Log.i("JSON", jsonObject.toString());
+                        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+
+                        //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                        os.writeBytes(jsonObject.toString());
+
+                        os.flush();
+                        os.close();
+
+                        Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                        Log.i("MSG" , conn.getResponseMessage());
+
+                        conn.disconnect();
+
+                    } catch (JSONException | MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (ProtocolException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            thread.start();
+        }
+    }
+
+    private class UpdateCompleteTime extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(FinalPage.this);
+            progressDialog.setMessage("processing results");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String result = "";
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    Intent intent = getIntent();
+                    String s2 = intent.getStringExtra("email");
+                    final String encodedURL = URLEncoder.encode(s2, "UTF-8");
+                    url = new URL(myUrl+encodedURL);
+                    //open a URL coonnection
+
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+
+                    InputStreamReader isw = new InputStreamReader(in);
+
+                    int data = isw.read();
+
+                    while (data != -1) {
+                        result += (char) data;
+                        data = isw.read();
+                    }
+
+                    // return the data to onPostExecute method
+                    return result;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return result;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+
+                        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+                        String date = format.format(new Date());
+
+                        jsonObject.put("departureTime", date);
+                        jsonObject.put("status", "COMPLETED");
+
+                        final String urlAddress = "https://fuel-queue-management.herokuapp.com/api/FuelQueue/"+jsonObject.getString("id");
+                        URL url = new URL(urlAddress);
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setRequestMethod("PUT");
+                        conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                        conn.setRequestProperty("Accept","application/json");
+                        conn.setDoOutput(true);
+                        conn.setDoInput(true);
+
+                        Log.i("JSON", jsonObject.toString());
+                        DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+
+                        //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                        os.writeBytes(jsonObject.toString());
+
+                        os.flush();
+                        os.close();
+
+                        Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                        Log.i("MSG" , conn.getResponseMessage());
+
+                        conn.disconnect();
+
+                    } catch (JSONException | MalformedURLException e) {
+                        e.printStackTrace();
+                    } catch (ProtocolException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            thread.start();
+        }
     }
 }
