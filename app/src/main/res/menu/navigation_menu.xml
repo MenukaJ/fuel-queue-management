@@ -9,6 +9,10 @@
         android:title="My Account" />
 
     <item
+        android:id="@+id/nav_fuel_details"
+        android:title="Fuel Details" />
+
+    <item
         android:id="@+id/nav_settings"
         android:title="Settings" />
 

@@ -16,7 +16,7 @@ import com.sliit.fuel_queue_management.Sql.DBHelper;
 
 public class Login extends AppCompatActivity {
 
-    EditText email , password;
+    EditText email, password, role;
     Button btnSubmit;
     TextView createAcc;
     DBHelper dbHelper;
@@ -28,6 +28,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         email=findViewById(R.id.text_email);
         password=findViewById(R.id.text_pass);
+        role=findViewById(R.id.text_role);
         btnSubmit = findViewById(R.id.btnSubmit_login);
         dbHelper = new DBHelper(this);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -35,16 +36,27 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String emailCheck = email.getText().toString();
                 String passCheck = password.getText().toString();
+                String roleCheck = role.getText().toString();
                 Cursor  cursor = dbHelper.getData();
                 if(cursor.getCount() == 0){
                     Toast.makeText(Login.this,"No entries Exists",Toast.LENGTH_LONG).show();
                 }
                 if (loginCheck(cursor,emailCheck,passCheck)) {
-                    Intent intent = new Intent(Login.this,FinalPage.class);
-                    intent.putExtra("email",emailCheck);
-                    email.setText("");
-                    password.setText("");
-                    startActivity(intent);
+                    if (roleCheck.equalsIgnoreCase("OWNER")) {
+                        Intent intent = new Intent(Login.this,FuelDetailsList.class);
+                        intent.putExtra("email",emailCheck);
+                        email.setText("");
+                        password.setText("");
+                        role.setText("");
+                        startActivity(intent);
+                    } else if (roleCheck.equalsIgnoreCase("CUSTOMER"))  {
+                        Intent intent = new Intent(Login.this,FinalPage.class);
+                        intent.putExtra("email",emailCheck);
+                        email.setText("");
+                        password.setText("");
+                        role.setText("");
+                        startActivity(intent);
+                    }
                 }else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
                     builder.setCancelable(true);
