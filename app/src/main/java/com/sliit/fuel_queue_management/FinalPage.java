@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,73 +47,25 @@ import java.util.Date;
 /**
  * The type Final page.
  */
-public class FinalPage extends AppCompatActivity {
+public class FinalPage extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
-    /**
-     * The My url.
-     */
     String myUrl = "https://fuel-queue-management.herokuapp.com/email/";
-    /**
-     * The Queue count.
-     */
+
     TextView queueCount;
-    /**
-     * The Vehicle type.
-     */
     TextView vehicleType;
-    /**
-     * The Vehicle number.
-     */
     TextView vehicleNumber;
-    /**
-     * The Fuel station.
-     */
     TextView fuelStation;
-    /**
-     * The Fuel arrive time.
-     */
     TextView fuelArriveTime;
-    /**
-     * The Fuel finish time.
-     */
     TextView fuelFinishTime;
-    /**
-     * The Join time.
-     */
     TextView joinTime;
-    /**
-     * The Exist time.
-     */
     TextView existTime;
-    /**
-     * The Join.
-     */
     Button join;
-    /**
-     * The Exist.
-     */
     Button exist;
-    /**
-     * The Complete.
-     */
     Button complete;
-
-    /**
-     * The Progress dialog.
-     */
     ProgressDialog progressDialog;
-
-    /**
-     * The Text.
-     */
     TextView text;
-    /**
-     * The Drawer layout.
-     */
     public DrawerLayout drawerLayout;
-    /**
-     * The Action bar drawer toggle.
-     */
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
     @Override
@@ -128,7 +81,7 @@ public class FinalPage extends AppCompatActivity {
         //getSupportActionBar().hide();
         setContentView(R.layout.activity_final_page);
 
-        drawerLayout = findViewById(R.id.my_drawer_layout);
+        drawerLayout = findViewById(R.id.customer_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
 
         // pass the Open and Close toggle for the drawer layout listener
@@ -187,6 +140,12 @@ public class FinalPage extends AppCompatActivity {
                 updateCompleteTime.execute();
             }
         });
+
+        NavigationView mNavigationView = (NavigationView) findViewById(R.id.nav);
+
+        if (mNavigationView != null) {
+            mNavigationView.setNavigationItemSelectedListener(this);
+        }
     }
 
     @Override
@@ -196,6 +155,21 @@ public class FinalPage extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.nav_logout) {
+            Intent intent = new Intent(FinalPage.this,Login.class);
+            startActivity(intent);
+            return true;
+        }/*else if (id == R.id.nav_fuel_details) {
+            Intent intent = new Intent(FinalPage.this,FuelDetailsList.class);
+            startActivity(intent);
+            return true;
+        }*/
+        return false;
     }
 
     /**

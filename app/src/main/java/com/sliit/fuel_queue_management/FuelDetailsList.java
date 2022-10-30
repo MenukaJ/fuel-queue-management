@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +32,8 @@ import java.net.URLEncoder;
 /**
  * The type Fuel details list.
  */
-public class FuelDetailsList extends AppCompatActivity {
+public class FuelDetailsList extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
 
     String myUrl = "https://fuel-queue-management.herokuapp.com/api/FuelDetails";
     TextView type;
@@ -55,7 +58,7 @@ public class FuelDetailsList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fuel_details_list);
 
-        drawerLayout = findViewById(R.id.my_drawer_layout);
+        drawerLayout = findViewById(R.id.owner_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
@@ -73,6 +76,11 @@ public class FuelDetailsList extends AppCompatActivity {
         fuelStation = (TextView) findViewById(R.id.fuelStation);
         fuelArriveTime = (TextView) findViewById(R.id.fuelArriveTime);
         fuelFinishTime = (TextView) findViewById(R.id.fuelFinishTime);
+
+        NavigationView mNavigationView = (NavigationView) findViewById(R.id.own_nav);
+        if (mNavigationView != null) {
+            mNavigationView.setNavigationItemSelectedListener(this);
+        }
     }
 
     @Override
@@ -81,6 +89,21 @@ public class FuelDetailsList extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.nav_logout) {
+            Intent intent = new Intent(FuelDetailsList.this,Login.class);
+            startActivity(intent);
+            return true;
+        }/*else if (id == R.id.nav_fuel_details) {
+            Intent intent = new Intent(FinalPage.this,FuelDetailsList.class);
+            startActivity(intent);
+            return true;
+        }*/
+        return false;
     }
 
     public class MyAsyncTasks extends AsyncTask<String, String, String> {

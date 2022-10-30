@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase DB) {
-        DB.execSQL("create Table UserDetails(userID TEXT primary key,name TEXT,password PASSWORD,number NUMBER)");
+        DB.execSQL("create Table UserDetails(userID TEXT primary key,name TEXT,password PASSWORD,number NUMBER, role TEXT)");
     }
     @Override
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
@@ -36,13 +36,14 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param password the password
      * @return the boolean
      */
-    public Boolean insetUserData(String name,String number,String email,String password){
+    public Boolean insetUserData(String name,String number,String email,String password, String role){
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("userID",email);
         contentValues.put("name",name);
         contentValues.put("password",password);
         contentValues.put("number",number);
+        contentValues.put("role",role);
         long result= DB.insert("UserDetails",null,contentValues);
         if (result == -1){
             return false;

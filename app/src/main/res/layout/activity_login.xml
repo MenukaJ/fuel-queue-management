@@ -58,18 +58,6 @@
             android:inputType="numberPassword"
             android:padding="20dp" />
 
-        <EditText
-            android:id="@+id/text_role"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/edit_text_box"
-            android:drawableStart="@drawable/ic_mail"
-            android:gravity="center"
-            android:hint="Enter Role"
-            android:inputType="text"
-            android:padding="20dp" />
-
         <Button
             android:id="@+id/btnSubmit_login"
             android:layout_width="250dp"
