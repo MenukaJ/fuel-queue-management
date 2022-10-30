@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,5 +9,43 @@
     tools:context=".FuelDetailsList"
     android:background="@drawable/background_main">
 
+    <TextView
+        android:id="@+id/fuelListId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Fuel Details"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="21sp"
+        android:background="#217306"
+        android:padding="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="38dp"/>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+    <ImageView
+        android:onClick="addFuelDetails"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/addition"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="40dp"
+        android:clickable="true"/>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipedown"
+        android:layout_below="@+id/fuelListId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginLeft="17dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fuelList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</RelativeLayout>
