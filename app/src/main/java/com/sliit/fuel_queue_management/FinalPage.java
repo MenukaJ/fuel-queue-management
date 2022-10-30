@@ -63,7 +63,7 @@ public class FinalPage extends AppCompatActivity implements
     Button join;
     Button exist;
     Button complete;
-    ProgressDialog progressDialog;
+    static ProgressDialog progressDialog;
     TextView text;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;

@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
                 }
                 if (loginCheck(cursor,emailCheck,passCheck)) {
                     if (role.equalsIgnoreCase("OWNER")) {
-                        Intent intent = new Intent(Login.this,FuelDetailsList.class);
+                        Intent intent = new Intent(Login.this,OwnerDashboard.class);
                         intent.putExtra("email",emailCheck);
                         email.setText("");
                         password.setText("");
