@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FuelQueueManagement">
         <activity
+            android:name=".ViewFuelDetails"
+            android:exported="false" />
+        <activity
+            android:name=".OwnerDashboard"
+            android:exported="false" />
+        <activity
             android:name=".FuelDetailsList"
             android:exported="false" />
         <activity
