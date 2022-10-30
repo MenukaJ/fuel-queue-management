@@ -19,28 +19,20 @@ import com.sliit.fuel_queue_management.Sql.DBHelper;
  */
 public class Login extends AppCompatActivity {
 
-    /**
-     * The Email.
-     */
-    EditText email, /**
-     * The Password.
-     */
-    password, /**
-     * The Role.
-     */
-    role;
-    /**
-     * The Btn submit.
-     */
+    EditText email, password;
+    String role = null;
     Button btnSubmit;
-    /**
-     * The Create acc.
-     */
     TextView createAcc;
-    /**
-     * The Db helper.
-     */
     DBHelper dbHelper;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +41,6 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         email=findViewById(R.id.text_email);
         password=findViewById(R.id.text_pass);
-        role=findViewById(R.id.text_role);
         btnSubmit = findViewById(R.id.btnSubmit_login);
         dbHelper = new DBHelper(this);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -57,25 +48,23 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String emailCheck = email.getText().toString();
                 String passCheck = password.getText().toString();
-                String roleCheck = role.getText().toString();
+                //String roleCheck = role.getText().toString();
                 Cursor  cursor = dbHelper.getData();
                 if(cursor.getCount() == 0){
                     Toast.makeText(Login.this,"No entries Exists",Toast.LENGTH_LONG).show();
                 }
                 if (loginCheck(cursor,emailCheck,passCheck)) {
-                    if (roleCheck.equalsIgnoreCase("OWNER")) {
+                    if (role.equalsIgnoreCase("OWNER")) {
                         Intent intent = new Intent(Login.this,OwnerDashboard.class);
                         intent.putExtra("email",emailCheck);
                         email.setText("");
                         password.setText("");
-                        role.setText("");
                         startActivity(intent);
-                    } else if (roleCheck.equalsIgnoreCase("CUSTOMER"))  {
+                    } else if (role.equalsIgnoreCase("CUSTOMER"))  {
                         Intent intent = new Intent(Login.this,FinalPage.class);
                         intent.putExtra("email",emailCheck);
                         email.setText("");
                         password.setText("");
-                        role.setText("");
                         startActivity(intent);
                     }
                 }else {
@@ -106,10 +95,11 @@ public class Login extends AppCompatActivity {
      * @param passCheck  the pass check
      * @return the boolean
      */
-    public static boolean loginCheck(Cursor cursor,String emailCheck,String passCheck) {
+    public boolean loginCheck(Cursor cursor, String emailCheck, String passCheck) {
         while (cursor.moveToNext()){
             if (cursor.getString(0).equals(emailCheck)) {
                 if (cursor.getString(2).equals(passCheck)) {
+                    setRole(cursor.getString(4));
                     return true;
                 }
                 return false;
