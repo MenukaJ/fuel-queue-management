@@ -77,14 +77,14 @@ public class OwnerDashboard extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_logout) {
-            Intent intent = new Intent(OwnerDashboard.this,Login.class);
+            Intent intent = new Intent(OwnerDashboard.this, Login.class);
             startActivity(intent);
             return true;
-        }/*else if (id == R.id.nav_fuel_details) {
-            Intent intent = new Intent(FinalPage.this,FuelDetailsList.class);
+        }else if (id == R.id.nav_account) {
+            Intent intent = new Intent(OwnerDashboard.this,UserProfile.class);
             startActivity(intent);
             return true;
-        }*/
+        }
         return false;
     }
 }
