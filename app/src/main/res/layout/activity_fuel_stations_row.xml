@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="80dp"
     android:layout_marginTop="10dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
@@ -31,20 +31,10 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/nameFuel"
-            android:layout_width="100dp"
+            android:id="@+id/nameStation"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:text="Fuel Name"
-            android:textColor="#000"
-            android:textSize="21sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical" />
-
-        <TextView
-            android:id="@+id/statusFuel"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:text="Active"
             android:textColor="#000"
             android:textSize="21sp"
             android:textStyle="bold"
@@ -54,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/editFuel"
+                android:id="@+id/viewStation"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/edit"
@@ -63,17 +53,6 @@
                 android:layout_marginRight="39dp"
                 android:clickable="true"
                 android:foreground="?android:attr/selectableItemBackground" />
-
-            <ImageView
-                android:id="@+id/deleteFuel"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/delete"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground" />
         </RelativeLayout>
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

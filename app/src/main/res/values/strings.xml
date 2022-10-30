@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Fuel-Queue-Management</string>
+    <string name="app_name">SL Fuel</string>
     <!-- to toggle the open close button of the navigation drawer -->
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>

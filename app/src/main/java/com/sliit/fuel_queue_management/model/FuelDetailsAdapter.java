@@ -69,38 +69,6 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
         });
     }
 
-    private void deleteFuelDetails(final String id) {
-        TextView close, type;
-        Button submit;
-        final Dialog dialog;
-
-        dialog = new Dialog(context);
-        dialog.setContentView(R.layout.activity_delete_fuel_details);
-
-        close = (TextView) dialog.findViewById(R.id.txtClose);
-        type = (TextView) dialog.findViewById(R.id.modFuel);
-        type.setText("Delete Details");
-
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-
-        submit = (Button) dialog.findViewById(R.id.edBtnFuelDet);
-
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Submit("DELETE", "", dialog, id);
-            }
-        });
-
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.show();
-    }
-
     private void editFuelDetails(String id, String typeName) {
         TextView close, type;
         final EditText fuelType;
@@ -108,7 +76,6 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
         final Dialog dialog;
 
         dialog = new Dialog(context);
-
         dialog.setContentView(R.layout.activity_modify_fuel_details);
 
         close = (TextView) dialog.findViewById(R.id.txtClose);
@@ -139,9 +106,40 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
         dialog.show();
     }
 
+    private void deleteFuelDetails(final String id) {
+        TextView close, type;
+        Button submit;
+        final Dialog dialog;
+
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.activity_delete_fuel_details);
+
+        close = (TextView) dialog.findViewById(R.id.txtClose);
+        type = (TextView) dialog.findViewById(R.id.modFuel);
+        type.setText("Delete Details");
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        submit = (Button) dialog.findViewById(R.id.edBtnFuelDet);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Submit("DELETE", "", dialog, id);
+            }
+        });
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+    }
+
     private void Submit(String method, final String data, final Dialog dialog, final String id) {
         if (method == "PUT") {
-            StringRequest request = new StringRequest(Request.Method.PUT, url + id, new Response.Listener<String>() {
+            StringRequest request = new StringRequest(Request.Method.PUT, url + "/" + id, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     dialog.dismiss();
@@ -164,7 +162,7 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
             };
             Volley.newRequestQueue(context).add(request);
         } else if (method == "DELETE") {
-            StringRequest request = new StringRequest(Request.Method.DELETE, url + id, new Response.Listener<String>() {
+            StringRequest request = new StringRequest(Request.Method.DELETE, url + "/" + id, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     dialog.dismiss();

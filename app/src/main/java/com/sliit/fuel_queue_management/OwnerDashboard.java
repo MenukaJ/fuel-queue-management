@@ -52,7 +52,7 @@ public class OwnerDashboard extends AppCompatActivity implements
         addStudentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OwnerDashboard.this, Login.class);
+                Intent intent = new Intent(OwnerDashboard.this, FuelStationsList.class);
                 startActivity(intent);
             }
         });
