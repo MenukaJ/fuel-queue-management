@@ -56,8 +56,13 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
             @Override
             public void onClick(View view) {
                 String id = fuelDetails.get(position).getId();
-                String typeName = fuelDetails.get(position).getType();
-                editFuelDetails(id, typeName);
+                String type = fuelDetails.get(position).getType();
+                String arrivalTime = fuelDetails.get(position).getArrivalTime();
+                String finishTime = fuelDetails.get(position).getFinishTime();
+                String date = fuelDetails.get(position).getDate();
+                String status = fuelDetails.get(position).getStatus();
+                String stationName = fuelDetails.get(position).getFuelStation().getName();
+                editFuelDetails(id, type, arrivalTime, finishTime, date, status, stationName);
             }
         });
         holder.deleteFuelDet.setOnClickListener(new View.OnClickListener() {
@@ -69,9 +74,9 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
         });
     }
 
-    private void editFuelDetails(String id, String typeName) {
-        TextView close, type;
-        final EditText fuelType;
+    private void editFuelDetails(String id, String pType, String pArrival, String pFinish, String pDate, String pStatus, String pStation) {
+        TextView close, header;
+        final EditText fuelType, fuelArrival, fuelFinished, fuelDate, fuelStatus, fuelStationName;
         Button submit;
         final Dialog dialog;
 
@@ -79,8 +84,8 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
         dialog.setContentView(R.layout.activity_modify_fuel_details);
 
         close = (TextView) dialog.findViewById(R.id.txtClose);
-        type = (TextView) dialog.findViewById(R.id.modFuel);
-        type.setText("Update Details");
+        header = (TextView) dialog.findViewById(R.id.modFuel);
+        header.setText("Update Details");
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,10 +95,19 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
         });
 
         fuelType = (EditText) dialog.findViewById(R.id.edFuelType);
+        fuelType.setText(pType);
+        fuelArrival = (EditText) dialog.findViewById(R.id.edFuelArrival);
+        fuelArrival.setText(pArrival);
+        fuelFinished = (EditText) dialog.findViewById(R.id.edFuelFinish);
+        fuelFinished.setText(pFinish);
+        fuelDate = (EditText) dialog.findViewById(R.id.edFuelDate);
+        fuelDate.setText(pDate);
+        fuelStatus = (EditText) dialog.findViewById(R.id.edFuelStatus);
+        fuelStatus.setText(pStatus);
+        fuelStationName = (EditText) dialog.findViewById(R.id.edFuelStation);
+        fuelStationName.setText(pStation);
+
         submit = (Button) dialog.findViewById(R.id.edBtnFuelDet);
-
-        fuelType.setText(typeName);
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +121,7 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
     }
 
     private void deleteFuelDetails(final String id) {
-        TextView close, type;
+        TextView close, header;
         Button submit;
         final Dialog dialog;
 
@@ -115,8 +129,8 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
         dialog.setContentView(R.layout.activity_delete_fuel_details);
 
         close = (TextView) dialog.findViewById(R.id.txtClose);
-        type = (TextView) dialog.findViewById(R.id.modFuel);
-        type.setText("Delete Details");
+        header = (TextView) dialog.findViewById(R.id.modFuel);
+        header.setText("Delete Details");
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override

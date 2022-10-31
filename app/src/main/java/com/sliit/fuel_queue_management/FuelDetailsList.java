@@ -32,8 +32,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.sliit.fuel_queue_management.model.FuelDetails;
 import com.sliit.fuel_queue_management.model.FuelDetailsAdapter;
+import com.sliit.fuel_queue_management.model.FuelStation;
+import com.sliit.fuel_queue_management.model.Owner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -95,6 +98,13 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
                         FuelDetails fuelDet = new FuelDetails();
                         fuelDet.setId(jsonObject.getString("id"));
                         fuelDet.setType(jsonObject.getString("type"));
+                        fuelDet.setArrivalTime(jsonObject.getString("arrivalTime"));
+                        fuelDet.setFinishTime(jsonObject.getString("finishTime"));
+                        fuelDet.setDate(jsonObject.getString("date"));
+                        fuelDet.setStatus(jsonObject.getString("status"));
+                        Gson gson = new Gson();
+                        FuelStation fuelStation = gson.fromJson(jsonObject.getString("fuelStation"), FuelStation.class);
+                        fuelDet.setFuelStation(fuelStation);
                         fuelDetails.add(fuelDet);
                     } catch (JSONException e) {
                         e.printStackTrace();

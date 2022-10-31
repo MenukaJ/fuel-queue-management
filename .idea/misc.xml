@@ -9,13 +9,14 @@
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/drawable/gradient_background.xml" value="0.1" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/drawable/main_logo.xml" value="0.18" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activitiy_fuel_details_row.xml" value="0.1" />
+        <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_delete_fuel_details.xml" value="0.1" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_final_page.xml" value="0.1" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_fuel_details_list.xml" value="0.1" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_fuel_stations_list.xml" value="0.1" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_fuel_stations_row.xml" value="0.1" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_modify_fuel_details.xml" value="0.1" />
+        <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_modify_fuel_details.xml" value="0.12" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_owner_dashboard.xml" value="0.15625" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
         <entry key="..\:/AndroidWorkspace/fuel-queue-management/app/src/main/res/layout/activity_view_fuel_details.xml" value="0.1" />

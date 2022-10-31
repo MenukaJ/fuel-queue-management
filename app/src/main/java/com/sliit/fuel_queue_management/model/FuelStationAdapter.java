@@ -70,7 +70,7 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
     }
 
     private void viewFuelStation(String id, String pName, String pContactNo, String pAddressLine1, String pAddressLine2, String pAddressLine3, String pOwner) {
-        TextView close, name;
+        TextView close, header;
         final TextView stationName, stationContact, stationAddress, stationOwner;
         final Dialog dialog;
 
@@ -78,8 +78,8 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
         dialog.setContentView(R.layout.activity_view_fuel_station);
 
         close = (TextView) dialog.findViewById(R.id.txtClose);
-        name = (TextView) dialog.findViewById(R.id.modStation);
-        name.setText("Fuel Station Details");
+        header = (TextView) dialog.findViewById(R.id.modStation);
+        header.setText("Fuel Station Details");
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
