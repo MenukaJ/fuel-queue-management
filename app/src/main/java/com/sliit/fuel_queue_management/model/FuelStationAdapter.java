@@ -57,14 +57,21 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
             public void onClick(View view) {
                 String id = fuelStation.get(position).getId();
                 String name = fuelStation.get(position).getName();
-                viewFuelStation(id, name);
+                String contactNo = fuelStation.get(position).getContactNo();
+                String addressLine1 = fuelStation.get(position).getAddressLine1();
+                String addressLine2 = fuelStation.get(position).getAddressLine2();
+                String addressLine3 = fuelStation.get(position).getAddressLine3();
+                String ownerFirstName = fuelStation.get(position).getOwner().getFistName();
+                String ownerLastName = fuelStation.get(position).getOwner().getLastName();
+                String ownerName = ownerFirstName + " " + ownerLastName;
+                viewFuelStation(id, name, contactNo, addressLine1, addressLine2, addressLine3, ownerName);
             }
         });
     }
 
-    private void viewFuelStation(String id, String pName) {
+    private void viewFuelStation(String id, String pName, String pContactNo, String pAddressLine1, String pAddressLine2, String pAddressLine3, String pOwner) {
         TextView close, name;
-        final TextView stationName;
+        final TextView stationName, stationContact, stationAddress, stationOwner;
         final Dialog dialog;
 
         dialog = new Dialog(context);
@@ -83,6 +90,12 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
 
         stationName = (TextView) dialog.findViewById(R.id.edStationName);
         stationName.setText(pName + " Station");
+        stationContact = (TextView) dialog.findViewById(R.id.edStationContact);
+        stationContact.setText("Contact : " + pContactNo);
+        stationAddress = (TextView) dialog.findViewById(R.id.edStationAdd1);
+        stationAddress.setText("Address : " + pAddressLine1 + ", " + pAddressLine2 + ", " + pAddressLine3);
+        stationOwner = (TextView) dialog.findViewById(R.id.edStationOwn);
+        stationOwner.setText("Owner : " + pOwner);
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
@@ -94,7 +107,7 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, no;
+        private TextView no, name;
         private ImageView viewFuelStat;
 
         public MyViewHolder(@NonNull View itemView) {

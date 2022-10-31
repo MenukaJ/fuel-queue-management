@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="350dp"
-    android:layout_height="200dp"
+    android:layout_height="300dp"
     android:layout_centerVertical="true"
     android:layout_gravity="center"
     android:background="@drawable/rounded_background">
@@ -40,7 +40,30 @@
         android:id="@+id/edStationName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fuel Type"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/edStationContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/edStationAdd1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/edStationOwn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"

@@ -23,10 +23,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.sliit.fuel_queue_management.model.FuelDetails;
 import com.sliit.fuel_queue_management.model.FuelDetailsAdapter;
 import com.sliit.fuel_queue_management.model.FuelStation;
 import com.sliit.fuel_queue_management.model.FuelStationAdapter;
+import com.sliit.fuel_queue_management.model.Owner;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,6 +82,13 @@ public class FuelStationsList extends AppCompatActivity implements SwipeRefreshL
                         FuelStation fuelStat = new FuelStation();
                         fuelStat.setId(jsonObject.getString("id"));
                         fuelStat.setName(jsonObject.getString("name"));
+                        fuelStat.setContactNo(jsonObject.getString("contactNo"));
+                        fuelStat.setAddressLine1(jsonObject.getString("addressLine1"));
+                        fuelStat.setAddressLine2(jsonObject.getString("addressLine2"));
+                        fuelStat.setAddressLine3(jsonObject.getString("addressLine3"));
+                        Gson gson = new Gson();
+                        Owner owner = gson.fromJson(jsonObject.getString("owner"), Owner.class);
+                        fuelStat.setOwner(owner);
                         fuelStation.add(fuelStat);
                     } catch (JSONException e) {
                         e.printStackTrace();
