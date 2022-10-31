@@ -50,8 +50,9 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull FuelDetailsAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.title.setText(fuelDetails.get(position).getType());
         holder.no.setText("#" + String.valueOf(position+1));
+        holder.name.setText(fuelDetails.get(position).getType());
+        holder.date.setText(fuelDetails.get(position).getDate());
         holder.editFuelDet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,13 +199,14 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView title, no;
+        private TextView no, name, date;
         private ImageView editFuelDet, deleteFuelDet;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             no = (TextView) itemView.findViewById(R.id.no);
-            title = (TextView) itemView.findViewById(R.id.nameFuel);
+            name = (TextView) itemView.findViewById(R.id.nameFuel);
+            date = (TextView) itemView.findViewById(R.id.dateFuel);
             editFuelDet = (ImageView) itemView.findViewById(R.id.editFuel);
             deleteFuelDet = (ImageView) itemView.findViewById(R.id.deleteFuel);
         }

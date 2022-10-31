@@ -50,8 +50,8 @@ public class FuelStationAdapter extends RecyclerView.Adapter<FuelStationAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull FuelStationAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.name.setText(fuelStation.get(position).getName());
         holder.no.setText("#" + String.valueOf(position+1));
+        holder.name.setText(fuelStation.get(position).getName());
         holder.viewFuelStat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

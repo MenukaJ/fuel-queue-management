@@ -23,7 +23,6 @@ public class OwnerDashboard extends AppCompatActivity implements
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +37,16 @@ public class OwnerDashboard extends AppCompatActivity implements
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#A443E9")));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Intent prevIntent = getIntent();
+        String myEmail = prevIntent.getStringExtra("email");
+        System.out.println(myEmail);
 
         addAdminBtn = findViewById(R.id.iconFuel);
         addAdminBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(OwnerDashboard.this, FuelDetailsList.class);
+                intent.putExtra("email", myEmail);
                 startActivity(intent);
             }
         });

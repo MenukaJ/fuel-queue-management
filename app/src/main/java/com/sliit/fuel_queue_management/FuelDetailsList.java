@@ -88,7 +88,10 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
     private void getData() {
         refresh.setRefreshing(true);
 
-        arrayRequest = new JsonArrayRequest(url + "/owner/miyuru@gmail.com", new Response.Listener<JSONArray>() {
+        Intent intent = getIntent();
+        String myEmail = intent.getStringExtra("email");
+        System.out.println(myEmail);
+        arrayRequest = new JsonArrayRequest(url + "/owner/" + myEmail, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 JSONObject jsonObject = null;
