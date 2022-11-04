@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -32,6 +33,7 @@ import java.util.Map;
 public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.MyViewHolder> {
     private Context context;
     private ArrayList<FuelDetails> fuelDetails;
+    private SwipeRefreshLayout refresh;
     private String url = "https://fuel-queue-management.herokuapp.com/api/FuelDetails";
 
     public FuelDetailsAdapter(Context context, ArrayList<FuelDetails> fuelDetails) {
@@ -181,6 +183,12 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
                 @Override
                 public void onResponse(String response) {
                     dialog.dismiss();
+                    refresh.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            fuelDetails.clear();
+                        }
+                    });
                     Toast.makeText(context, "Record deleted successfully", Toast.LENGTH_LONG).show();
                 }
             }, new Response.ErrorListener() {
