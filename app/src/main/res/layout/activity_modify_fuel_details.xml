@@ -36,6 +36,22 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/edFuelDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fuel Date"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+    <TextView
+        android:id="@+id/edFuelStation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fuel Station"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
     <EditText
         android:id="@+id/edFuelType"
         android:layout_width="match_parent"
@@ -61,26 +77,10 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"/>
     <EditText
-        android:id="@+id/edFuelDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Fuel Date"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"/>
-    <EditText
         android:id="@+id/edFuelStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Fuel Status"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"/>
-    <EditText
-        android:id="@+id/edFuelStation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Fuel Station"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"/>
