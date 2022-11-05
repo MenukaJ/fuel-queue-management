@@ -164,11 +164,11 @@ public class FinalPage extends AppCompatActivity implements
             Intent intent = new Intent(FinalPage.this,Login.class);
             startActivity(intent);
             return true;
-        }/*else if (id == R.id.nav_fuel_details) {
-            Intent intent = new Intent(FinalPage.this,FuelDetailsList.class);
+        }else if (id == R.id.nav_account) {
+            Intent intent = new Intent(FinalPage.this,UserProfile.class);
             startActivity(intent);
             return true;
-        }*/
+        }
         return false;
     }
 

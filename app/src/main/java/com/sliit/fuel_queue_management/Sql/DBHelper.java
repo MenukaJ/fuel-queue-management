@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.service.autofill.UserData;
 
 /**
  * The type Db helper.
@@ -62,4 +63,11 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = DB.rawQuery("Select * from Userdetails ",null);
         return cursor;
     }
+
+    public Cursor getUserId(String email){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery("Select * from Userdetails Where userID='"+email+"'",null);
+        return cursor;
+    }
+
 }
