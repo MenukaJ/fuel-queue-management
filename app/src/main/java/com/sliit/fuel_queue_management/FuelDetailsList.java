@@ -69,8 +69,11 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
     private RecyclerView recyclerView;
     private Dialog dialog;
     private FuelDetailsAdapter fuelDetailsAdapter;
-    private EditText fuelType, fuelArrival, fuelFinished, fuelDate, fuelStatus, fuelStationName;
+    private EditText fuelType, fuelArrival, fuelFinished, fuelDate, fuelStatus;
+    private TextView fuelStationName;
+    private FuelStation fuelStationClass = new FuelStation();
     private String url = "https://fuel-queue-management.herokuapp.com/api/FuelDetails";
+    private String stationUrl = "https://fuel-queue-management.herokuapp.com/api/FuelStation";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,7 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
             public void run() {
                 fuelDetails.clear();
                 getData();
+                getStationData();
             }
         });
     }
@@ -129,7 +133,6 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
 
             }
         });
-
         requestQueue = Volley.newRequestQueue(FuelDetailsList.this);
         requestQueue.add(arrayRequest);
     }
@@ -163,7 +166,8 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
         fuelFinished = (EditText) dialog.findViewById(R.id.edFuelFinish);
         fuelDate = (EditText) dialog.findViewById(R.id.edFuelDate);
         fuelStatus = (EditText) dialog.findViewById(R.id.edFuelStatus);
-        fuelStationName = (EditText) dialog.findViewById(R.id.edFuelStation);
+        fuelStationName = (TextView) dialog.findViewById(R.id.edFuelStation);
+        fuelStationName.setText(fuelStationClass.getName());
         submit = (Button) dialog.findViewById(R.id.edBtnFuelDet);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,7 +196,7 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
                     Toast.makeText(FuelDetailsList.this, "Station name is required.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                saveData(fuelType.getText().toString(), fuelArrival.getText().toString(), fuelFinished.getText().toString(), fuelDate.getText().toString(), fuelStatus.getText().toString());
+                saveData(fuelType.getText().toString(), fuelArrival.getText().toString(), fuelFinished.getText().toString(), fuelDate.getText().toString(), fuelStatus.getText().toString(), fuelStationClass);
             }
         });
 
@@ -200,7 +204,7 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
         dialog.show();
     }
 
-    private void saveData(String pFuelType, String pFuelArrival, String pFuelFinished, String pFuelDate, String pFuelStatus) {
+    private void saveData(String pFuelType, String pFuelArrival, String pFuelFinished, String pFuelDate, String pFuelStatus, FuelStation fuelStationObject) {
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             JSONObject jsonBody = new JSONObject();
@@ -210,33 +214,11 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
             jsonBody.put("finishTime", pFuelFinished);
             jsonBody.put("date", pFuelDate);
             jsonBody.put("status", pFuelStatus);
-            FuelStation fuelStation = new FuelStation();
-            fuelStation.setId("635f3644c126b3395c2150be");
-            fuelStation.setName("IOC Boralesgamuwa");
-            fuelStation.setContactNo("0112789758");
-            fuelStation.setAddressLine1("401/5");
-            fuelStation.setAddressLine2("Maharagama Road");
-            fuelStation.setAddressLine3("Boralesgamuwa");
 
-            Owner owner = new Owner();
-            owner.setId("635f357ac126b3395c2150bd");
-            owner.setFistName("Miyuru");
-            owner.setLastName("Wijesinghe");
-            owner.setEmail("miyuru@gmail.com");
-            owner.setContactNo("0772729729");
-            owner.setNic("973010345V");
-            owner.setAddressLine1("1st Lane");
-            owner.setAddressLine2("Rattanapitiya");
-            owner.setAddressLine3("Boralesgamuwa");
-            owner.setRole("Owner");
-
-            fuelStation.setOwner(owner);
-            String fuelStat = new Gson().toJson(fuelStation);
+            String fuelStat = new Gson().toJson(fuelStationObject);
             JSONObject fuelStatJob = new JSONObject(fuelStat);
-
             jsonBody.put("fuelStation", fuelStatJob);
             final String requestBody = jsonBody.toString();
-
             Log.i("VOLLEY", requestBody);
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -295,5 +277,39 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
     public void onRefresh() {
         fuelDetails.clear();
         getData();
+    }
+
+    private void getStationData() {
+        Intent intent = getIntent();
+        String myEmail = intent.getStringExtra("email");
+        System.out.println(myEmail);
+        System.out.println(stationUrl + "/owner/" + myEmail);
+        arrayRequest = new JsonArrayRequest(stationUrl + "/owner/" + myEmail, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    System.out.println(response);
+                    JSONObject jsonObject = response.getJSONObject(0);
+                    fuelStationClass.setId(jsonObject.getString("id"));
+                    fuelStationClass.setName(jsonObject.getString("name"));
+                    fuelStationClass.setContactNo(jsonObject.getString("contactNo"));
+                    fuelStationClass.setAddressLine1(jsonObject.getString("addressLine1"));
+                    fuelStationClass.setAddressLine2(jsonObject.getString("addressLine2"));
+                    fuelStationClass.setAddressLine3(jsonObject.getString("addressLine3"));
+                    Gson gson = new Gson();
+                    Owner owner = gson.fromJson(jsonObject.getString("owner"), Owner.class);
+                    fuelStationClass.setOwner(owner);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue = Volley.newRequestQueue(FuelDetailsList.this);
+        requestQueue.add(arrayRequest);
     }
 }
