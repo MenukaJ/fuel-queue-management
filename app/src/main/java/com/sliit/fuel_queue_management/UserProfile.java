@@ -43,7 +43,7 @@ import java.util.Date;
 public class UserProfile extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
-    String myUrl = "https://fuel-queue-management.herokuapp.com/email/";
+    String myUrl = "https://fuel-queue-management.herokuapp.com/user/";
 
     TextView textViewFirstName;
     TextView textViewLastName;
@@ -140,7 +140,7 @@ public class UserProfile extends AppCompatActivity implements
         return false;
     }
 
-    public class User extends AsyncTask<String, String, String> {
+    public class GetUser extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -206,25 +206,28 @@ public class UserProfile extends AppCompatActivity implements
                 // JSONArray jsonArray1 = jsonObject.getJSONArray(jsonObject);
                 //JSONArray jsonArray1 = new JSONArray(s);
 
-                JSONObject userObj = jsonObject.optJSONObject("user");
-                JSONObject fuelStat = jsonObject.optJSONObject("fuelStation");
+//                JSONObject  = jsonObject.optJSONObject("user");
+//                JSONObject fuelStat = jsonObject.optJSONObject("fuelStation");
+//
+//                //JSONObject fuelDetails = new JSONObject(responce);
+//
+//                //JSONObject jsonObject1 =jsonArray1.getJSONObject(0);
+//                String count = jsonObject.getString("count");
+//
+//                //Show the Textview after fetching data
+//                queueCount.setVisibility(View.VISIBLE);
+//                //Display data with the Textview
+//                queueCount.setText(count);
+//                vehicleType.setText(userObj.getString("vehicleType"));
+//                vehicleNumber.setText(userObj.getString("vehicleNo"));
+//                fuelStation.setText(fuelStat.getString("name"));
+//                joinTime.setText("Join Time: "+jsonObject.getString("arrivalTime"));
+//                existTime.setText("Departure Time: "+jsonObject.getString("departureTime"));
+//                fuelArriveTime.setText("Fuel Arrival Time: "+jsonObject.getString("arrivalTime"));
+//                fuelFinishTime.setText("Fuel Departure Time: "+jsonObject.getString("departureTime"));
 
-                //JSONObject fuelDetails = new JSONObject(responce);
-
-                //JSONObject jsonObject1 =jsonArray1.getJSONObject(0);
-                String count = jsonObject.getString("count");
-
-                //Show the Textview after fetching data
-                queueCount.setVisibility(View.VISIBLE);
-                //Display data with the Textview
-                queueCount.setText(count);
-                vehicleType.setText(userObj.getString("vehicleType"));
-                vehicleNumber.setText(userObj.getString("vehicleNo"));
-                fuelStation.setText(fuelStat.getString("name"));
-                joinTime.setText("Join Time: "+jsonObject.getString("arrivalTime"));
-                existTime.setText("Departure Time: "+jsonObject.getString("departureTime"));
-                fuelArriveTime.setText("Fuel Arrival Time: "+jsonObject.getString("arrivalTime"));
-                fuelFinishTime.setText("Fuel Departure Time: "+jsonObject.getString("departureTime"));
+                System.out.println("This is a test"+jsonObject.toString());
+                System.out.println("This is a test"+jsonObject.getString("fistName"));
 
             } catch (JSONException e) {
                 e.printStackTrace();
