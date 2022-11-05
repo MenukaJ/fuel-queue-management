@@ -165,7 +165,9 @@ public class FinalPage extends AppCompatActivity implements
             startActivity(intent);
             return true;
         }else if (id == R.id.nav_account) {
+            Intent oldIntent = getIntent();
             Intent intent = new Intent(FinalPage.this,UserProfile.class);
+            intent.putExtra("email",oldIntent.getStringExtra("email"));
             startActivity(intent);
             return true;
         }

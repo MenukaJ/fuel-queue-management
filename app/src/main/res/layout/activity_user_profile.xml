@@ -115,8 +115,10 @@
                     android:layout_alignStart="@+id/ic_email"
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="20dp"
+                    android:background="@drawable/edit_text_box"
                     android:hint="Email"
                     android:inputType="textWebEmailAddress"
+                    android:textColor="#000000"
                     android:textSize="18sp" />
 
                 <View
@@ -145,6 +147,7 @@
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="20dp"
                     android:hint="Contact No"
+                    android:textColor="#000000"
                     android:inputType="phone"
                     android:textSize="18sp" />
 

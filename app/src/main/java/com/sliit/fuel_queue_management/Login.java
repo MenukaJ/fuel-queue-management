@@ -49,7 +49,6 @@ public class Login extends AppCompatActivity {
                 String emailCheck = email.getText().toString();
                 String passCheck = password.getText().toString();
                 //String roleCheck = role.getText().toString();
-                dbHelper.DropDB();
                 Cursor  cursor = dbHelper.getData();
                 if(cursor.getCount() == 0){
                     Toast.makeText(Login.this,"No entries Exists",Toast.LENGTH_LONG).show();

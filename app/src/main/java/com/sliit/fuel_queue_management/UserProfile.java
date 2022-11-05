@@ -61,9 +61,17 @@ public class UserProfile extends AppCompatActivity implements
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
-    boolean recordExist=true;
+    boolean recordExist=false;
 
     DBHelper dbHelper;
+
+    public boolean isRecordExist() {
+        return recordExist;
+    }
+
+    public void setRecordExist(boolean recordExist) {
+        this.recordExist = recordExist;
+    }
 
     @Override
     public void onBackPressed() {
@@ -101,18 +109,31 @@ public class UserProfile extends AppCompatActivity implements
 
         Intent intent = getIntent();
         String userEmail = intent.getStringExtra("email");
+        System.out.println("This is a test"+userEmail);
 
         Cursor cursor = dbHelper.getUserId(userEmail);
+        while (cursor.moveToNext()){
+            textViewContactNo.setText(cursor.getString(3));
+        }
 
-        JSONObject jsonObject = new JSONObject();
-        try {
+        GetUser getUser = new GetUser();
+        getUser.execute();
+
+        if (recordExist) {
+            //call update
+        } else {
+            //call post
+        }
+
+
+        /*try {
             textViewEmail.setText(jsonObject.getString("userID"));
             textViewPassword.setText(jsonObject.getString("password"));
             textViewContactNo.setText(jsonObject.getString("number"));
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
@@ -166,7 +187,7 @@ public class UserProfile extends AppCompatActivity implements
                     final String encodedURL = URLEncoder.encode(s2, "UTF-8");
                     url = new URL(myUrl+encodedURL);
                     //open a URL coonnection
-
+                    System.out.println("This is a test"+url);
                     urlConnection = (HttpURLConnection) url.openConnection();
 
                     InputStream in = urlConnection.getInputStream();
@@ -203,6 +224,15 @@ public class UserProfile extends AppCompatActivity implements
             progressDialog.dismiss();
             try {
                 JSONObject jsonObject = new JSONObject(s);
+                if (!jsonObject.isNull("id")) {
+                    textViewEmail.setText(jsonObject.getString("email"));
+                    textViewFirstName.setText(jsonObject.getString("fistName"));
+                    setRecordExist(true);
+                }
+                /*if(status.equals("200")) {
+                    textViewEmail.setText(jsonObject.getString("email"));
+                }*/
+
                 // JSONArray jsonArray1 = jsonObject.getJSONArray(jsonObject);
                 //JSONArray jsonArray1 = new JSONArray(s);
 

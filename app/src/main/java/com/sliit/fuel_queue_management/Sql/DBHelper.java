@@ -70,9 +70,4 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void DropDB() {
-        SQLiteDatabase DB = this.getWritableDatabase();
-        DB.execSQL("drop Table if exists UserDetails");
-    }
-
 }
