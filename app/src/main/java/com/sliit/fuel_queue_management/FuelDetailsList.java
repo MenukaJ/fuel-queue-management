@@ -20,9 +20,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +56,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,8 +74,8 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
     private RecyclerView recyclerView;
     private Dialog dialog;
     private FuelDetailsAdapter fuelDetailsAdapter;
-    private EditText fuelType, fuelArrival, fuelFinished, fuelDate, fuelStatus;
-    private TextView fuelStationName;
+    private EditText fuelType, fuelArrival, fuelFinished, fuelStatus;
+    private TextView fuelStationName, fuelDate;
     private FuelStation fuelStationClass = new FuelStation();
     private String url = "https://fuel-queue-management.herokuapp.com/api/FuelDetails";
     private String stationUrl = "https://fuel-queue-management.herokuapp.com/api/FuelStation";
@@ -164,7 +169,8 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
         fuelType = (EditText) dialog.findViewById(R.id.edFuelType);
         fuelArrival = (EditText) dialog.findViewById(R.id.edFuelArrival);
         fuelFinished = (EditText) dialog.findViewById(R.id.edFuelFinish);
-        fuelDate = (EditText) dialog.findViewById(R.id.edFuelDate);
+        fuelDate = (TextView) dialog.findViewById(R.id.edFuelDate);
+        fuelDate.setText(getCurrentDate());
         fuelStatus = (EditText) dialog.findViewById(R.id.edFuelStatus);
         fuelStationName = (TextView) dialog.findViewById(R.id.edFuelStation);
         fuelStationName.setText(fuelStationClass.getName());
@@ -180,8 +186,16 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
                     Toast.makeText(FuelDetailsList.this, "Arrived time is required.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (!fuelArrival.getText().toString().matches("^$|(\\d{2}):(\\d{2})$")) {
+                    Toast.makeText(FuelDetailsList.this, "Arrived time should be in HH:mm pattern.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (fuelFinished.getText().toString().isEmpty()) {
                     Toast.makeText(FuelDetailsList.this, "Finished time is required.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!fuelFinished.getText().toString().matches("^$|(\\d{2}):(\\d{2})$")) {
+                    Toast.makeText(FuelDetailsList.this, "Finished time should be in HH:mm pattern.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (fuelDate.getText().toString().isEmpty()) {
@@ -190,6 +204,10 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
                 }
                 if (fuelStatus.getText().toString().isEmpty()) {
                     Toast.makeText(FuelDetailsList.this, "Status is required.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!fuelStatus.getText().toString().matches("^$|Available|Finished")) {
+                    Toast.makeText(FuelDetailsList.this, "Fuel status is should be Available or Finished.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (fuelStationName.getText().toString().isEmpty()) {
@@ -311,5 +329,12 @@ public class FuelDetailsList extends AppCompatActivity implements SwipeRefreshLa
         });
         requestQueue = Volley.newRequestQueue(FuelDetailsList.this);
         requestQueue.add(arrayRequest);
+    }
+
+    private String getCurrentDate() {
+        Date currentDate = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        format.setLenient(false);
+        return format.format(currentDate);
     }
 }

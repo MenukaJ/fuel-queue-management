@@ -79,8 +79,8 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
 
     private void editFuelDetails(String id, String pType, String pArrival, String pFinish, String pDate, String pStatus, String pStation) {
         TextView close, header;
-        final EditText fuelType, fuelArrival, fuelFinished, fuelDate, fuelStatus;
-        final TextView fuelStationName;
+        final EditText fuelType, fuelArrival, fuelFinished, fuelStatus;
+        final TextView fuelStationName, fuelDate;
         Button submit;
         final Dialog dialog;
 
@@ -104,7 +104,7 @@ public class FuelDetailsAdapter extends RecyclerView.Adapter<FuelDetailsAdapter.
         fuelArrival.setText(pArrival);
         fuelFinished = (EditText) dialog.findViewById(R.id.edFuelFinish);
         fuelFinished.setText(pFinish);
-        fuelDate = (EditText) dialog.findViewById(R.id.edFuelDate);
+        fuelDate = (TextView) dialog.findViewById(R.id.edFuelDate);
         fuelDate.setText(pDate);
         fuelStatus = (EditText) dialog.findViewById(R.id.edFuelStatus);
         fuelStatus.setText(pStatus);
