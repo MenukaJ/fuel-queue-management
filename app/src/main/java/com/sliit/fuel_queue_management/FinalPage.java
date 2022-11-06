@@ -67,6 +67,15 @@ public class FinalPage extends AppCompatActivity implements
     TextView text;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
+    String fuelStationId = "";
+
+    public String getFuelStationId() {
+        return fuelStationId;
+    }
+
+    public void setFuelStationId(String fuelStationId) {
+        this.fuelStationId = fuelStationId;
+    }
 
     @Override
     public void onBackPressed() {
@@ -92,6 +101,7 @@ public class FinalPage extends AppCompatActivity implements
         FuelQue myAsyncTasks = new FuelQue();
         myAsyncTasks.execute();
 
+
         // to make the Navigation drawer icon always appear on the action bar
         getSupportActionBar().setTitle("Home");
         //getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.drawable.background_main)));
@@ -116,6 +126,7 @@ public class FinalPage extends AppCompatActivity implements
         join = findViewById(R.id.join);
         exist = findViewById(R.id.exist);
         complete = findViewById(R.id.complete);
+
 
         join.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,7 +224,7 @@ public class FinalPage extends AppCompatActivity implements
                     Intent intent = getIntent();
                     String s2 = intent.getStringExtra("email");
                     final String encodedURL = URLEncoder.encode(s2, "UTF-8");
-                    url = new URL(myUrl+encodedURL);
+                    url = new URL(myUrl + encodedURL);
                     //open a URL coonnection
 
                     urlConnection = (HttpURLConnection) url.openConnection();
@@ -252,13 +263,13 @@ public class FinalPage extends AppCompatActivity implements
             progressDialog.dismiss();
             try {
                 JSONObject jsonObject = new JSONObject(s);
-               // JSONArray jsonArray1 = jsonObject.getJSONArray(jsonObject);
+                // JSONArray jsonArray1 = jsonObject.getJSONArray(jsonObject);
                 //JSONArray jsonArray1 = new JSONArray(s);
 
                 JSONObject userObj = jsonObject.optJSONObject("user");
                 JSONObject fuelStat = jsonObject.optJSONObject("fuelStation");
 
-                //JSONObject fuelDetails = new JSONObject(responce);
+                setFuelStationId(fuelStat.getString("id"));
 
                 //JSONObject jsonObject1 =jsonArray1.getJSONObject(0);
                 String count = jsonObject.getString("count");
@@ -270,16 +281,20 @@ public class FinalPage extends AppCompatActivity implements
                 vehicleType.setText(userObj.getString("vehicleType"));
                 vehicleNumber.setText(userObj.getString("vehicleNo"));
                 fuelStation.setText(fuelStat.getString("name"));
-                joinTime.setText("Join Time: "+jsonObject.getString("arrivalTime"));
-                existTime.setText("Departure Time: "+jsonObject.getString("departureTime"));
-                fuelArriveTime.setText("Fuel Arrival Time: "+jsonObject.getString("arrivalTime"));
-                fuelFinishTime.setText("Fuel Departure Time: "+jsonObject.getString("departureTime"));
+                if (!jsonObject.isNull("arrivalTime"))
+                    joinTime.setText("Join Time: " + jsonObject.getString("arrivalTime"));
+                if (!jsonObject.isNull("departureTime"))
+                    existTime.setText("Departure Time: " + jsonObject.getString("departureTime"));
+
+                FuelDetails fuelDetails = new FuelDetails();
+                fuelDetails.execute();
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
+
 
     private class UpdateJoinTime extends AsyncTask<String, String, String> {
 
@@ -614,4 +629,77 @@ public class FinalPage extends AppCompatActivity implements
             thread.start();
         }
     }
+
+
+    public class FuelDetails extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(FinalPage.this);
+            progressDialog.setMessage("processing results");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String result = "";
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL("https://fuel-queue-management.herokuapp.com/api/FuelDetails/fuel-statation/" + getFuelStationId());
+                    //open a URL coonnection
+
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+
+                    InputStreamReader isw = new InputStreamReader(in);
+
+                    int data = isw.read();
+
+                    while (data != -1) {
+                        result += (char) data;
+                        data = isw.read();
+                    }
+
+                    // return the data to onPostExecute method
+                    return result;
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            try {
+                JSONObject jsonObject = new JSONObject(s);
+                if (!jsonObject.isNull("arrivalTime"))
+                    fuelArriveTime.setText("Fuel Arrival Time: " + jsonObject.getString("arrivalTime"));
+                if (!jsonObject.isNull("finishTime"))
+                    fuelFinishTime.setText("Fuel Departure Time: " + jsonObject.getString("finishTime"));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
