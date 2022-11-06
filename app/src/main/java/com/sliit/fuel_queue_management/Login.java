@@ -68,11 +68,27 @@ public class Login extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                    if (email.getText().toString().isEmpty()) {
+                        Toast.makeText(Login.this, "Email is required.", Toast.LENGTH_SHORT).show();
+                        return;
+                    } if (!email.getText().toString().matches("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")) {
+                        Toast.makeText(Login.this, "Email should be in example@gmail.com ", Toast.LENGTH_SHORT).show();
+                        return;
+                    } if (password.getText().toString().isEmpty()) {
+                        Toast.makeText(Login.this, "Password is required.", Toast.LENGTH_SHORT).show();
+                        return;
+                    } if (!password.getText().toString().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
+                        Toast.makeText(Login.this, "Password must contain [0-9], [a-z], [A-Z], ! @ # & ( ) ", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        Toast.makeText(Login.this, "Wrong Credential", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    /*AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
                     builder.setCancelable(true);
                     builder.setTitle("Wrong Credential");
                     builder.setMessage("Wrong Credential");
-                    builder.show();
+                    builder.show();*/
                 }
                 dbHelper.close();
             }

@@ -122,6 +122,10 @@ public class FinalPage extends AppCompatActivity implements
             public void onClick(View view) {
                 UpdateJoinTime updateJoinTime = new UpdateJoinTime();
                 updateJoinTime.execute();
+                recreate();
+                Intent oldIntent = getIntent();
+                Intent intent = new Intent(FinalPage.this,FinalPage.class);
+                intent.putExtra("email",oldIntent.getStringExtra("email"));
             }
         });
 
@@ -130,6 +134,10 @@ public class FinalPage extends AppCompatActivity implements
             public void onClick(View view) {
                 UpdateExistTime updateExistTime = new UpdateExistTime();
                 updateExistTime.execute();
+                recreate();
+                Intent oldIntent = getIntent();
+                Intent intent = new Intent(FinalPage.this,FinalPage.class);
+                intent.putExtra("email",oldIntent.getStringExtra("email"));
             }
         });
 
@@ -138,6 +146,10 @@ public class FinalPage extends AppCompatActivity implements
             public void onClick(View view) {
                 UpdateCompleteTime updateCompleteTime = new UpdateCompleteTime();
                 updateCompleteTime.execute();
+                recreate();
+                Intent oldIntent = getIntent();
+                Intent intent = new Intent(FinalPage.this,FinalPage.class);
+                intent.putExtra("email",oldIntent.getStringExtra("email"));
             }
         });
 

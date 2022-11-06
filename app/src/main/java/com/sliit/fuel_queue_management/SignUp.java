@@ -84,6 +84,30 @@ public class SignUp extends AppCompatActivity {
                 String number1 = number.getText().toString();
                 String email1 = email.getText().toString();
                 String pass1 = pass.getText().toString();
+
+                if (name.getText().toString().isEmpty()) {
+                    Toast.makeText(SignUp.this, "Name is required.", Toast.LENGTH_SHORT).show();
+                    return;
+                } if (number.getText().toString().isEmpty()) {
+                    Toast.makeText(SignUp.this, "Phone number is required.", Toast.LENGTH_SHORT).show();
+                    return;
+                } if (!number.getText().toString().matches("^[0-9]{10}$")) {
+                    Toast.makeText(SignUp.this, "Phone Number should be 10 Digit.", Toast.LENGTH_SHORT).show();
+                    return;
+                } if (email.getText().toString().isEmpty()) {
+                    Toast.makeText(SignUp.this, "Email is required.", Toast.LENGTH_SHORT).show();
+                    return;
+                } if (!email.getText().toString().matches("\\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b")) {
+                    Toast.makeText(SignUp.this, "Email should be in example@gmail.com ", Toast.LENGTH_SHORT).show();
+                    return;
+                } if (pass.getText().toString().isEmpty()) {
+                    Toast.makeText(SignUp.this, "Password time is required.", Toast.LENGTH_SHORT).show();
+                    return;
+                } if (!pass.getText().toString().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")) {
+                    Toast.makeText(SignUp.this, "Password must contain [0-9], [a-z], [A-Z], ! @ # & ( ) ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 boolean b =dbHelper.insetUserData(name1,number1,email1,pass1, getRole());
                 if (b){
                     Toast.makeText(SignUp.this,"Data inserted",Toast.LENGTH_SHORT).show();
