@@ -60,13 +60,13 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public Cursor getData(){
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select * from Userdetails ",null);
+        Cursor cursor = DB.rawQuery("Select * from UserDetails ",null);
         return cursor;
     }
 
     public Cursor getUserId(String email){
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select * from Userdetails Where userID='"+email+"'",null);
+        Cursor cursor = DB.rawQuery("Select * from UserDetails Where userID='"+email+"'",null);
         return cursor;
     }
 

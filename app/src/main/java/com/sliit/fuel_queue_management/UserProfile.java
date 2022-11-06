@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,23 +46,24 @@ public class UserProfile extends AppCompatActivity implements
 
     String myUrl = "https://fuel-queue-management.herokuapp.com/user/";
 
-    TextView textViewFirstName;
-    TextView textViewLastName;
+    EditText textViewFirstName;
+    EditText textViewLastName;
     TextView textViewEmail;
     TextView textViewContactNo;
-    TextView textViewAddress;
-    TextView textViewNIC;
+    EditText textViewAddress;
+    EditText textViewNIC;
     TextView textViewPassword;
-    TextView textViewVehicleNo;
-    TextView textViewVehicleType;
+    EditText textViewVehicleNo;
+    EditText textViewVehicleType;
+    TextView textViewId;
 
-    Button update;
+    Button btnUpdate;
 
     static ProgressDialog progressDialog;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
-    boolean recordExist=false;
+    boolean recordExist = false;
 
     DBHelper dbHelper;
 
@@ -105,35 +107,46 @@ public class UserProfile extends AppCompatActivity implements
         textViewNIC = findViewById(R.id.textView_nic);
         textViewPassword = findViewById(R.id.textView_password);
         textViewVehicleNo = findViewById(R.id.textView_vehicle_no);
-        textViewVehicleNo = findViewById(R.id.textView_vehicle_type);
+        textViewVehicleType = findViewById(R.id.textView_vehicle_type);
+        textViewId = findViewById(R.id.textView_id);
+        btnUpdate = findViewById(R.id.btn_submit);
 
         Intent intent = getIntent();
         String userEmail = intent.getStringExtra("email");
-        System.out.println("This is a test"+userEmail);
+        System.out.println("This is a test" + userEmail);
 
         Cursor cursor = dbHelper.getUserId(userEmail);
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
+            textViewPassword.setText(cursor.getString(2));
+            textViewEmail.setText(cursor.getString(0));
+            textViewFirstName.setText(cursor.getString(1));
             textViewContactNo.setText(cursor.getString(3));
+
         }
 
         GetUser getUser = new GetUser();
         getUser.execute();
+        //recreate();
 
-        if (recordExist) {
-            //call update
-        } else {
-            //call post
-        }
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (recordExist) {
+                    //call update
+                    UpdateUser updUser = new UpdateUser();
+                    updUser.execute();
+                }else {
+                    //call post
+                    CreateUser creUser = new CreateUser();
+                    creUser.execute();
+                }
+
+            }
+        });
+
+        System.out.println("Record Exist is "+recordExist);
 
 
-        /*try {
-            textViewEmail.setText(jsonObject.getString("userID"));
-            textViewPassword.setText(jsonObject.getString("password"));
-            textViewContactNo.setText(jsonObject.getString("number"));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
 
     }
 
@@ -150,11 +163,11 @@ public class UserProfile extends AppCompatActivity implements
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_logout) {
-            Intent intent = new Intent(UserProfile.this,Login.class);
+            Intent intent = new Intent(UserProfile.this, Login.class);
             startActivity(intent);
             return true;
-        }else if (id == R.id.nav_account) {
-            Intent intent = new Intent(UserProfile.this,UserProfile.class);
+        } else if (id == R.id.nav_account) {
+            Intent intent = new Intent(UserProfile.this, UserProfile.class);
             startActivity(intent);
             return true;
         }
@@ -168,7 +181,7 @@ public class UserProfile extends AppCompatActivity implements
             super.onPreExecute();
             // display a progress dialog for good user experiance
             progressDialog = new ProgressDialog(UserProfile.this);
-            progressDialog.setMessage("processing results");
+            progressDialog.setMessage("processing results 3");
             progressDialog.setCancelable(false);
             progressDialog.show();
 
@@ -185,9 +198,9 @@ public class UserProfile extends AppCompatActivity implements
                     Intent intent = getIntent();
                     String s2 = intent.getStringExtra("email");
                     final String encodedURL = URLEncoder.encode(s2, "UTF-8");
-                    url = new URL(myUrl+encodedURL);
+                    url = new URL(myUrl + encodedURL);
                     //open a URL coonnection
-                    System.out.println("This is a test"+url);
+                    System.out.println("This is a test" + url);
                     urlConnection = (HttpURLConnection) url.openConnection();
 
                     InputStream in = urlConnection.getInputStream();
@@ -225,43 +238,180 @@ public class UserProfile extends AppCompatActivity implements
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 if (!jsonObject.isNull("id")) {
-                    textViewEmail.setText(jsonObject.getString("email"));
                     textViewFirstName.setText(jsonObject.getString("fistName"));
+                    textViewLastName.setText(jsonObject.getString("lastName"));
+                    textViewEmail.setText(jsonObject.getString("email"));
+                    textViewContactNo.setText(jsonObject.getString("contactNo"));
+                    textViewAddress.setText(jsonObject.getString("addressLine1"));
+                    textViewNIC.setText(jsonObject.getString("nic"));
+                    textViewPassword.setText(jsonObject.getString("password"));
+                    textViewVehicleNo.setText(jsonObject.getString("vehicleNo"));
+                    textViewVehicleType.setText(jsonObject.getString("vehicleType"));
+                    textViewId.setText(jsonObject.getString("id"));
                     setRecordExist(true);
                 }
-                /*if(status.equals("200")) {
-                    textViewEmail.setText(jsonObject.getString("email"));
-                }*/
-
-                // JSONArray jsonArray1 = jsonObject.getJSONArray(jsonObject);
-                //JSONArray jsonArray1 = new JSONArray(s);
-
-//                JSONObject  = jsonObject.optJSONObject("user");
-//                JSONObject fuelStat = jsonObject.optJSONObject("fuelStation");
-//
-//                //JSONObject fuelDetails = new JSONObject(responce);
-//
-//                //JSONObject jsonObject1 =jsonArray1.getJSONObject(0);
-//                String count = jsonObject.getString("count");
-//
-//                //Show the Textview after fetching data
-//                queueCount.setVisibility(View.VISIBLE);
-//                //Display data with the Textview
-//                queueCount.setText(count);
-//                vehicleType.setText(userObj.getString("vehicleType"));
-//                vehicleNumber.setText(userObj.getString("vehicleNo"));
-//                fuelStation.setText(fuelStat.getString("name"));
-//                joinTime.setText("Join Time: "+jsonObject.getString("arrivalTime"));
-//                existTime.setText("Departure Time: "+jsonObject.getString("departureTime"));
-//                fuelArriveTime.setText("Fuel Arrival Time: "+jsonObject.getString("arrivalTime"));
-//                fuelFinishTime.setText("Fuel Departure Time: "+jsonObject.getString("departureTime"));
-
-                System.out.println("This is a test"+jsonObject.toString());
-                System.out.println("This is a test"+jsonObject.getString("fistName"));
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class CreateUser extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(UserProfile.this);
+            progressDialog.setMessage("processing results 2");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String result = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("id", textViewId.getText().toString());
+                jsonObject.put("fistName", textViewFirstName.getText().toString());
+                jsonObject.put("lastName", textViewLastName.getText().toString());
+                jsonObject.put("email", textViewEmail.getText().toString());
+                jsonObject.put("contactNo", textViewContactNo.getText().toString());
+                jsonObject.put("nic", textViewNIC.getText().toString());
+                jsonObject.put("addressLine1", textViewAddress.getText().toString());
+                jsonObject.put("vehicleNo", textViewVehicleNo.getText().toString());
+                jsonObject.put("vehicleType", textViewVehicleType.getText().toString());
+                jsonObject.put("password", textViewPassword.getText().toString());
+
+                final String urlAddress = "https://fuel-queue-management.herokuapp.com/api/User/" + textViewId.getText().toString();
+                URL url = new URL(urlAddress);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                Log.i("JSON", jsonObject.toString());
+                DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+
+                //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                os.writeBytes(jsonObject.toString());
+
+                os.flush();
+                os.close();
+
+                Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                Log.i("MSG", conn.getResponseMessage());
+
+                conn.disconnect();
+
+            } catch (JSONException | MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("OnPostExecute method called");
+                }
+            });
+
+            thread.start();
+        }
+    }
+
+    private class UpdateUser extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(UserProfile.this);
+            progressDialog.setMessage("processing results 1");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String result = "";
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("id", textViewId.getText().toString());
+                jsonObject.put("fistName", textViewFirstName.getText().toString());
+                jsonObject.put("lastName", textViewLastName.getText().toString());
+                jsonObject.put("email", textViewEmail.getText().toString());
+                jsonObject.put("contactNo", textViewContactNo.getText().toString());
+                jsonObject.put("nic", textViewNIC.getText().toString());
+                jsonObject.put("addressLine1", textViewAddress.getText().toString());
+                jsonObject.put("vehicleNo", textViewVehicleNo.getText().toString());
+                jsonObject.put("vehicleType", textViewVehicleType.getText().toString());
+                jsonObject.put("password", textViewPassword.getText().toString());
+
+                final String urlAddress = "https://fuel-queue-management.herokuapp.com/api/User/" + textViewId.getText().toString();
+                URL url = new URL(urlAddress);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("PUT");
+                conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                Log.i("JSON", jsonObject.toString());
+                DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+
+                //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+                os.writeBytes(jsonObject.toString());
+
+                os.flush();
+                os.close();
+
+                Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+                Log.i("MSG", conn.getResponseMessage());
+
+                conn.disconnect();
+
+            } catch (JSONException | MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            progressDialog.dismiss();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("OnPostExecute method called");
+                }
+            });
+
+            thread.start();
         }
     }
 }

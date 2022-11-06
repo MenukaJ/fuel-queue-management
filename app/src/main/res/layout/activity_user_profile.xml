@@ -8,6 +8,12 @@
     android:background="@color/design_default_color_primary"
     tools:context=".UserProfile">
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/ic_id_profile"
+        android:layout_below="@+id/divider_vehicle_type">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,12 +39,6 @@
 
         </RelativeLayout>
 
-        <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ic_fn_profile"
-            android:layout_below="@+id/divider_vehicle_type">
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -46,19 +46,47 @@
                 android:background="@color/white"
                 android:padding="15dp">
 
-                <!--First Name-->
+                <!--ID-->
                 <ImageView
-                    android:id="@+id/ic_fn_profile"
+                    android:id="@+id/ic_id_profile"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:background="@drawable/user_dp" />
 
                 <TextView
+                    android:id="@+id/textView_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/ic_id_profile"
+                    android:layout_marginStart="50dp"
+                    android:hint="ID"
+                    android:textSize="18sp" />
+
+                <View
+                    android:id="@+id/divider_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/textView_id"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/black" />
+
+                <!--First Name-->
+                <ImageView
+                    android:id="@+id/ic_fn_profile"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/divider_id"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/user_dp" />
+
+                <EditText
                     android:id="@+id/textView_first_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/divider_id"
                     android:layout_alignStart="@+id/ic_fn_profile"
                     android:layout_marginStart="50dp"
+                    android:layout_marginTop="20dp"
                     android:hint="First Name"
                     android:textSize="18sp" />
 
@@ -79,7 +107,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/user_dp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/textView_last_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -168,7 +196,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/address" />
 
-                <TextView
+                <EditText
                     android:id="@+id/textView_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -197,7 +225,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/nic" />
 
-                <TextView
+                <EditText
                     android:id="@+id/textView_nic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -254,7 +282,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/vehicle_no" />
 
-                <TextView
+                <EditText
                     android:id="@+id/textView_vehicle_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -282,7 +310,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/vehicle_type" />
 
-                <TextView
+                <EditText
                     android:id="@+id/textView_vehicle_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -301,10 +329,26 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/black" />
 
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="250dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_view"
+                    android:fontFamily="sans-serif-black"
+                    android:padding="10dp"
+                    android:text="Update"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:layout_below="@+id/divider_vehicle_type"/>
+
             </RelativeLayout>
 
-        </ScrollView>
+
 
     </LinearLayout>
+
+    </ScrollView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
